@@ -25,7 +25,7 @@ RSpec.describe Dry::ElasticModel::Base do
             },
             date_field: {
               type: "date",
-              format: "dateOptionalTime"
+              format: "strict_date_optional_time||epoch_millis"
             },
             long_field: {
               type: "long"

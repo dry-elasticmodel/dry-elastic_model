@@ -5,7 +5,7 @@ module Dry
 
       Text = Types::String.meta(es_name: "text", opts: { index: "not_analyzed" })
       Keyword = Types::Symbol.meta(es_name: "keyword")
-      Date = Types::Date.meta(es_name: "date", opts: { format: "dateOptionalTime" })
+      Date = Types::Date.meta(es_name: "date", opts: { format: "strict_date_optional_time||epoch_millis" })
       Long = Types::Integer.meta(es_name: "long")
       Double = Types::Integer.meta(es_name: "double")
       Boolean = Types::Bool.meta(es_name: "boolean")
