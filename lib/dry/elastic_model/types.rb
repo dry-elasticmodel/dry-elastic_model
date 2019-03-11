@@ -8,7 +8,7 @@ module Dry
       Date = Types::Date.meta(es_name: "date", opts: { format: "strict_date_optional_time||epoch_millis" })
       Long = Types::Integer.meta(es_name: "long")
       Double = Types::Integer.meta(es_name: "double")
-      Boolean = Types::Bool.meta(es_name: "boolean")
+      Boolean = Types::Strict::Bool.meta(es_name: "boolean") | Types.Value('true') | Types.Value('false')
       IP = Types::String.constrained(format: /\A(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\z/i).meta(es_name: "ip")
 
       TYPES = {

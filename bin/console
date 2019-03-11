@@ -18,5 +18,9 @@ class Foo < Dry::ElasticModel::Base
   field :ip_field, :ip
 end
 
+class Bar < Dry::ElasticModel::Base
+  field :field, :boolean
+end
+
 require "pry"
 Pry.start
