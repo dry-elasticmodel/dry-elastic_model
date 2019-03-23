@@ -8,9 +8,9 @@ module Dry
         {
           name.downcase.to_sym => {
             properties: self.schema.inject({}) do |h, (attr, definition)|
-              meta = definition.meta.fetch(:opts, {})
+              opts = definition.meta.fetch(:opts, {})
               h.merge(
-                attr => { type: definition.meta.fetch(:es_name) }.merge(meta)
+                attr => { type: definition.meta.fetch(:es_name) }.merge(opts)
               )
             end
           }
