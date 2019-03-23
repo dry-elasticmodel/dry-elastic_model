@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe Dry::ElasticModel::Base do
   class Foo < described_class
     field :text_field, :text
-    field :keyword_field, :keyword
+    field :keyword_field, :keyword, index: false
     field :date_field, :date
     field :long_field, :long
     field :double_field, :double
@@ -21,7 +21,8 @@ RSpec.describe Dry::ElasticModel::Base do
               index: "not_analyzed"
             },
             keyword_field: {
-              type: "keyword"
+              type: "keyword",
+              index: false
             },
             date_field: {
               type: "date",

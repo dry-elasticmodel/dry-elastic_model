@@ -9,13 +9,14 @@ require "dry/elastic_model"
 # (If you use this, don't forget to add pry to your Gemfile!)
 
 class Foo < Dry::ElasticModel::Base
-  field :text_field, :text
+  field :text_field, :text, index: false
   field :keyword_field, :keyword
   field :date_field, :date
   field :long_field, :long
   field :double_field, :double
   field :boolean_field, :boolean
   field :ip_field, :ip
+#  field :integer_range_field, :integer_range
 end
 
 class Bar < Dry::ElasticModel::Base
