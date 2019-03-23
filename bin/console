@@ -23,5 +23,9 @@ class Bar < Dry::ElasticModel::Base
   field :field, :boolean
 end
 
+class FooList < Dry::ElasticModel::Base
+  list :list_text_field, :text
+end
+
 require "pry"
 Pry.start

@@ -8,6 +8,15 @@ module Dry
         default_opts = type_definition.meta[:opts] || {}
         attribute(name, type_definition.meta(opts: default_opts.merge(opts)))
       end
+
+      def list(name, type, opts = {})
+        member = Types::TYPES.fetch(type.to_sym)
+
+        type_definition = Types::Array.(member)
+
+        default_opts = type_definition.meta[:opts] || {}
+        attribute(name, type_definition.meta(opts: default_opts.merge(opts)))
+      end
     end
   end
 end

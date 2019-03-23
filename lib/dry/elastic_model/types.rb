@@ -65,6 +65,10 @@ module Dry
         attribute :lte, IP
       end
 
+      Array = ->(type) do
+        Types::Strict::Array.of(type).meta(es_name: type.meta[:es_name])
+      end
+
       TYPES = {
         text: Text,
         binary: Binary,
@@ -85,7 +89,7 @@ module Dry
         double_range: DoubleRange,
         date_range: DateRange,
         ip_range: IPRange,
-        ip: IP
+        ip: IP,
       }
     end
   end

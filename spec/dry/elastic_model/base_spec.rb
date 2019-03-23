@@ -9,6 +9,7 @@ RSpec.describe Dry::ElasticModel::Base do
     field :double_field, :double
     field :boolean_field, :boolean
     field :ip_field, :ip
+    list :list_text_field, :text
   end
 
   describe "mapping" do
@@ -39,6 +40,9 @@ RSpec.describe Dry::ElasticModel::Base do
             },
             ip_field: {
               type: "ip"
+            },
+            list_text_field: {
+              type: "text"
             }
           }
         }
@@ -49,4 +53,6 @@ RSpec.describe Dry::ElasticModel::Base do
       expect(Foo.mapping).to eq(expected_mapping)
     end
   end
+
+
 end
