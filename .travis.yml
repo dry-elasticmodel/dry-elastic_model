@@ -6,8 +6,6 @@ rvm:
   - 2.3.8
   - 2.4.4
   - 2.5.5
-  - mruby-head
-  - truffleruby
   - jruby-head
 
 before_install: gem install bundler -v 2.0.1
