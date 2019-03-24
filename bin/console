@@ -27,5 +27,9 @@ class FooList < Dry::ElasticModel::Base
   list :list_text_field, :text
 end
 
+class FooRange < Dry::ElasticModel::Base
+  range :range_long_field, :long
+end
+
 require "pry"
 Pry.start

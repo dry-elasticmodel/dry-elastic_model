@@ -12,7 +12,8 @@ module Dry
       Binary = Types::String.meta(es_name: "binary")
 
       # Date datatype
-      Date = Types::Date.meta(es_name: "date", opts: { format: "strict_date_optional_time||epoch_millis" })
+      # TODO: Test strings
+      Date = (Types::Date | Types.Value('now')).meta(es_name: "date", opts: { format: "strict_date_optional_time||epoch_millis" })
 
       # Numeric datatypes
       Long = Types::Integer.constrained(gteq: -2**63, lteq: 2**63-1).meta(es_name: "long")
@@ -65,8 +66,26 @@ module Dry
         attribute :lte, IP
       end
 
+      ArrayTypesCache = {}
+
       Array = ->(type) do
-        Types::Strict::Array.of(type).meta(es_name: type.meta[:es_name])
+        ArrayTypesCache.fetch(type) do
+          ArrayTypesCache[type] =
+            Types::Strict::Array.of(type).meta(es_name: type.meta[:es_name])
+        end
+      end
+
+      RangeTypesCache = {}
+
+      Range = ->(type) do
+        RangeTypesCache.fetch(type) do
+          Types::Hash.schema(
+            gte: type.optional.default(nil),
+            gt: type.optional.default(nil),
+            lte: type.optional.default(nil),
+            lt: type.optional.default(nil)
+          )
+        end
       end
 
       TYPES = {
@@ -91,6 +110,8 @@ module Dry
         ip_range: IPRange,
         ip: IP,
       }
+
+      RANGE_TYPES = TYPES.slice(:integer, :float, :long, :double, :date)
     end
   end
 end
