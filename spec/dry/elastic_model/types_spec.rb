@@ -380,6 +380,20 @@ RSpec.describe Dry::ElasticModel::Types do
   end
 
   describe "range" do
+    context "when IP type" do
+      subject(:type) { described_class::Range.(described_class::IP) }
+
+      include_examples "type", "ip_range"
+      include_examples "nil handling"
+
+      it "accepts hash with gt, gte, lt, lte values" do
+        expect do
+          type[{ lt: "127.0.0.10", gte: "127.0.0.1" }]
+        end.not_to raise_error
+      end
+
+    end
+
     context "when number type" do
       subject(:type) { described_class::Range.(described_class::Integer) }
 
