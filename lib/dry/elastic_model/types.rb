@@ -111,7 +111,8 @@ module Dry
         ip: IP,
       }
 
-      RANGE_TYPES = TYPES.slice(:integer, :float, :long, :double, :date)
+      RANGE_KEYS = %i[integer float long double date]
+      RANGE_TYPES = TYPES.select {|k, _v| RANGE_KEYS.include?(k) }
     end
   end
 end
