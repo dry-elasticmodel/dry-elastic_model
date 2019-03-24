@@ -380,6 +380,42 @@ RSpec.describe Dry::ElasticModel::Types do
   end
 
   describe "range" do
+    context "when number type" do
+      subject(:type) { described_class::Range.(described_class::Integer) }
+
+      include_examples "type", "integer_range"
+      include_examples "nil handling"
+
+      it "accepts empty hash" do
+        expect { type[{}] }.not_to raise_error
+      end
+
+      it "accepts hash with gt, gte, lt, lte values" do
+        expect do
+          type[{ lt: 3, lte: 3, gt: 10, gte: 20 }]
+        end.not_to raise_error
+      end
+
+      it "does not accept values of other type with correct key" do
+        expect do
+          type[{ lt: "3" }]
+        end.to raise_error(Dry::Types::ConstraintError)
+      end
+
+      it "does not accept if hash has other keys" do
+        expect do
+          type[{ foo: 1 }]
+        end.to raise_error(Dry::Types::ConstraintError)
+      end
+
+      it "does not accept a list" do
+        expect { type[[]] }.to raise_error(Dry::Types::ConstraintError)
+      end
+
+      it "does not accept symbols in a list" do
+        expect { type["test"] }.to raise_error(Dry::Types::ConstraintError)
+      end
+    end
   end
 
   describe "object" do

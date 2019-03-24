@@ -60,12 +60,12 @@ module Dry
       end
 
       Range = ->(type) do
-        Types::Hash.schema(
+        Types::Strict::Hash.schema(
           gte: type.optional.default(nil),
           gt: type.optional.default(nil),
           lte: type.optional.default(nil),
           lt: type.optional.default(nil)
-        ).meta(es_name: "#{type.meta[:es_name]}_range")
+        ).strict.meta(es_name: "#{type.meta[:es_name]}_range")
       end
 
       ObjectType = Types::Strict::Hash.meta(es_name: "object")
