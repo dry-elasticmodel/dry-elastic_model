@@ -1,39 +1,59 @@
+require "dry-struct"
+require "resolv"
+
 module Dry
   module ElasticModel
     module Types
       include Dry::Types.module
 
       # String datatypes
-      Text = Types::String.meta(es_name: "text", opts: { index: "not_analyzed" })
-      Keyword = Types::Symbol.meta(es_name: "keyword")
+      Text = Types::Strict::String.meta(es_name: "text", opts: { index: "not_analyzed" })
+      Keyword = Types::Strict::Symbol.meta(es_name: "keyword")
 
       # Binary datatype
       # TODO: Verify if correct Base64
-      Binary = Types::String.meta(es_name: "binary")
+      Binary = Types::Strict::String.meta(es_name: "binary")
 
       # Date datatype
       # TODO: Test strings
-      Date = (Types::Date | Types.Value('now')).meta(es_name: "date", opts: { format: "strict_date_optional_time||epoch_millis" })
+      Date = (Types::Strict::Date | Types::Strict::Time | Types.Value('now')).meta(es_name: "date", opts: { format: "strict_date_optional_time||epoch_millis" })
 
       # Numeric datatypes
-      Long = Types::Integer.constrained(gteq: -2**63, lteq: 2**63-1).meta(es_name: "long")
-      Integer = Types::Integer.constrained(gteq: -2**31, lteq: 2**31-1).meta(es_name: "integer")
-      Short = Types::Integer.meta(es_name: "short").
-                constrained(gteq: -32_768, lteq: 32_767)
-      Byte = Types::Integer.meta(es_name: "byte").
-               constrained(gteq: -128, lteq: 127)
-      Double = Types::Float.meta(es_name: "double")
-      Float = Types::Float.meta(es_name: "float")
-      HalfFloat = Types::Float.meta(es_name: "half_flot")
-      ScaledFloat = Types::Float.meta(es_name: "scaled_flot")
+      LONG_LIMIT = 2**63
+      INTEGER_LIMIT = 2**31
+      SHORT_LIMIT = 2**15
+      BYTE_LIMIT = 2**8
+
+      Long = Types::Strict::Integer.
+               constrained(gteq: -LONG_LIMIT, lteq: LONG_LIMIT-1).
+               meta(es_name: "long")
+      Integer = Types::Strict::Integer.
+                  constrained(gteq: -INTEGER_LIMIT, lteq: INTEGER_LIMIT-1).
+                  meta(es_name: "integer")
+      Short = Types::Strict::Integer.
+                constrained(gteq: -SHORT_LIMIT, lteq: SHORT_LIMIT-1).
+                meta(es_name: "short")
+      Byte = Types::Strict::Integer.
+               constrained(gteq: -BYTE_LIMIT, lteq: BYTE_LIMIT-1).
+               meta(es_name: "byte")
+      Double = (Types::Strict::Integer | Types::Strict::Float).
+                 meta(es_name: "double")
+      Float = (Types::Strict::Integer | Types::Strict::Float).
+                meta(es_name: "float")
+      HalfFloat = (Types::Strict::Integer | Types::Strict::Float).
+                    meta(es_name: "half_float")
+      ScaledFloat = (Types::Strict::Integer | Types::Strict::Float).
+                      meta(es_name: "scaled_float")
 
       # Boolean datatype
-      Boolean = (Types::Strict::Bool | Types.Value('true') | Types.Value('false')).meta(es_name: "boolean")
+      Boolean = (Types::Strict::Bool | Types.Value('true') | Types.Value('false')).
+                  meta(es_name: "boolean")
 
       # IP datatype
-      IP = Types::String.
-             constrained(format: /\A(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\z/i).
-             meta(es_name: "ip")
+      IP = (
+        Types::Strict::String.constrained(format: Resolv::IPv4::Regex) |
+        Types::Strict::String.constrained(format: Resolv::IPv6::Regex)
+      ).meta(es_name: "ip")
 
       Array = ->(type) do
         Types::Strict::Array.of(type).meta(es_name: type.meta[:es_name])

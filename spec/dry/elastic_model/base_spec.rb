@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe Dry::ElasticModel::Base do
   class Foo < described_class
     field :text_field, :text
