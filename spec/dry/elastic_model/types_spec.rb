@@ -1,3 +1,5 @@
+require "spec_helper"
+
 RSpec.describe Dry::ElasticModel::Types do
   shared_examples_for "type" do |expected_type|
     it "has #{expected_type} es type" do
