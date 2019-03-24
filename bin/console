@@ -19,7 +19,7 @@ class Foo < Dry::ElasticModel::Base
 end
 
 class Bar < Dry::ElasticModel::Base
-  field :field, :boolean
+  field :field, :object
 end
 
 class FooList < Dry::ElasticModel::Base

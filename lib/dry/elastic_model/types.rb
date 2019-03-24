@@ -48,6 +48,8 @@ module Dry
         ).meta(es_name: "#{type.meta[:es_name]}_range")
       end
 
+      ObjectType = Types::Hash.meta(es_name: "object")
+
       TYPES = {
         text: Text,
         binary: Binary,
@@ -62,7 +64,8 @@ module Dry
         half_float: HalfFloat,
         scaled_float: ScaledFloat,
         boolean: Boolean,
-        ip: IP
+        ip: IP,
+        object: ObjectType
       }
 
       RANGE_KEYS = %i[integer float long double date]
