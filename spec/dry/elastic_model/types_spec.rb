@@ -255,7 +255,7 @@ RSpec.describe Dry::ElasticModel::Types do
 
     it "accepts true value" do
       expect { type[true] }.not_to raise_error
-   end
+    end
 
     it "accepts false value" do
       expect { type[false] }.not_to raise_error
@@ -383,5 +383,29 @@ RSpec.describe Dry::ElasticModel::Types do
   end
 
   describe "object" do
+    subject(:type) { described_class::ObjectType }
+
+    include_examples "type", "object"
+    include_examples "nil handling"
+
+    it "accepts objects" do
+      expect { type[{}] }.not_to raise_error
+    end
+
+    it "accepts nested objects" do
+      expect { type[{ foo: :bar, baz: { bar: :foo } }] }.not_to raise_error
+    end
+
+    it "does not accept strings" do
+      expect { type["test"] }.to raise_error(Dry::Types::ConstraintError)
+    end
+
+    it "does not accept numbers" do
+      expect { type[3] }.to raise_error(Dry::Types::ConstraintError)
+    end
+
+    it "does not accept booleans" do
+      expect { type[true] }.to raise_error(Dry::Types::ConstraintError)
+    end
   end
 end

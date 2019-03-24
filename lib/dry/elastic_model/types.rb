@@ -68,7 +68,7 @@ module Dry
         ).meta(es_name: "#{type.meta[:es_name]}_range")
       end
 
-      ObjectType = Types::Hash.meta(es_name: "object")
+      ObjectType = Types::Strict::Hash.meta(es_name: "object")
 
       TYPES = {
         text: Text,
