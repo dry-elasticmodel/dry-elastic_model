@@ -7,10 +7,21 @@ RSpec.describe Dry::ElasticModel::Types do
     end
   end
 
+  shared_examples_for "nil handling" do
+    it "does not accept nil value by default" do
+      expect { type[nil] }.to raise_error(Dry::Types::ConstraintError)
+    end
+
+    it "accepts nil value if explicit" do
+      expect { type.optional[nil] }.not_to raise_error
+    end
+  end
+
   describe "text" do
     subject(:type) { described_class::Text }
 
     include_examples "type", "text"
+    include_examples "nil handling"
 
     it "accepts string as value" do
       expect { type["test"] }.not_to raise_error
@@ -25,6 +36,7 @@ RSpec.describe Dry::ElasticModel::Types do
     subject(:type) { described_class::Keyword }
 
     include_examples "type", "keyword"
+    include_examples "nil handling"
 
     it "accepts keyword as value" do
       expect { type[:test] }.not_to raise_error
@@ -43,6 +55,7 @@ RSpec.describe Dry::ElasticModel::Types do
     subject(:type) { described_class::Binary }
 
     include_examples "type", "binary"
+    include_examples "nil handling"
 
     it "accepts string as value" do
       expect { type["test"] }.not_to raise_error
@@ -57,6 +70,7 @@ RSpec.describe Dry::ElasticModel::Types do
     subject(:type) { described_class::Date }
 
     include_examples "type", "date"
+    include_examples "nil handling"
 
     it "accepts 'now' string" do
       expect { type["now"] }.not_to raise_error
@@ -87,6 +101,7 @@ RSpec.describe Dry::ElasticModel::Types do
     subject(:type) { described_class::Long }
 
     include_examples "type", "long"
+    include_examples "nil handling"
 
     it "accepts number" do
       expect { type[1] }.not_to raise_error
@@ -115,6 +130,7 @@ RSpec.describe Dry::ElasticModel::Types do
     subject(:type) { described_class::Integer }
 
     include_examples "type", "integer"
+    include_examples "nil handling"
 
     it "accepts number" do
       expect { type[1] }.not_to raise_error
@@ -143,6 +159,7 @@ RSpec.describe Dry::ElasticModel::Types do
     subject(:type) { described_class::Short }
 
     include_examples "type", "short"
+    include_examples "nil handling"
 
     it "accepts number" do
       expect { type[1] }.not_to raise_error
@@ -172,6 +189,7 @@ RSpec.describe Dry::ElasticModel::Types do
     subject(:type) { described_class::Byte }
 
     include_examples "type", "byte"
+    include_examples "nil handling"
 
     it "accepts integer number" do
       expect { type[1] }.not_to raise_error
@@ -209,6 +227,7 @@ RSpec.describe Dry::ElasticModel::Types do
       subject(:type) { type_class }
 
       include_examples "type", es_type_name.to_s
+      include_examples "nil handling"
 
       it "accepts integer number" do
         expect { type[1] }.not_to raise_error
@@ -232,6 +251,7 @@ RSpec.describe Dry::ElasticModel::Types do
     subject(:type) { described_class::Boolean }
 
     include_examples "type", "boolean"
+    include_examples "nil handling"
 
     it "accepts true value" do
       expect { type[true] }.not_to raise_error
@@ -262,6 +282,7 @@ RSpec.describe Dry::ElasticModel::Types do
     subject(:type) { described_class::IP }
 
     include_examples "type", "ip"
+    include_examples "nil handling"
 
     it "accepts IPv4" do
       [
@@ -303,6 +324,7 @@ RSpec.describe Dry::ElasticModel::Types do
       subject(:type) { described_class::Array.(described_class::Text) }
 
       include_examples "type", "text"
+      include_examples "nil handling"
 
       it "accepts empty array" do
         expect { type[[]] }.not_to raise_error
@@ -333,6 +355,7 @@ RSpec.describe Dry::ElasticModel::Types do
       subject(:type) { described_class::Array.(described_class::Integer) }
 
       include_examples "type", "integer"
+      include_examples "nil handling"
 
       it "accepts empty array" do
         expect { type[[]] }.not_to raise_error
@@ -340,10 +363,6 @@ RSpec.describe Dry::ElasticModel::Types do
 
       it "accepts integers in a list" do
         expect { type[[1, 2, 3]] }.not_to raise_error
-      end
-
-      it "does not accept nil" do
-        expect { type[nil] }.to raise_error(Dry::Types::ConstraintError)
       end
 
       it "does not accept nil in a list" do
