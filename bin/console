@@ -16,7 +16,6 @@ class Foo < Dry::ElasticModel::Base
   field :double_field, :double
   field :boolean_field, :boolean
   field :ip_field, :ip
-#  field :integer_range_field, :integer_range
 end
 
 class Bar < Dry::ElasticModel::Base

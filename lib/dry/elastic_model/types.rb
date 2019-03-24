@@ -35,37 +35,6 @@ module Dry
              constrained(format: /\A(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\z/i).
              meta(es_name: "ip")
 
-      # Range datatypes
-      class IntegerRange < Dry::Struct
-        attribute :gte, Integer
-        attribute :lte, Integer
-      end
-
-      class FloatRange < Dry::Struct
-        attribute :gte, Float
-        attribute :lte, Float
-      end
-
-      class LongRange < Dry::Struct
-        attribute :gte, Long
-        attribute :lte, Long
-      end
-
-      class DoubleRange < Dry::Struct
-        attribute :gte, Double
-        attribute :lte, Double
-      end
-
-      class DateRange < Dry::Struct
-        attribute :gte, Date
-        attribute :lte, Date
-      end
-
-      class IPRange < Dry::Struct
-        attribute :gte, IP
-        attribute :lte, IP
-      end
-
       Array = ->(type) do
         Types::Strict::Array.of(type).meta(es_name: type.meta[:es_name])
       end
@@ -76,7 +45,7 @@ module Dry
           gt: type.optional.default(nil),
           lte: type.optional.default(nil),
           lt: type.optional.default(nil)
-        )
+        ).meta(es_name: "#{type.meta[:es_name]}_range")
       end
 
       TYPES = {
@@ -93,13 +62,7 @@ module Dry
         half_float: HalfFloat,
         scaled_float: ScaledFloat,
         boolean: Boolean,
-        integer_range: IntegerRange,
-        float_range: FloatRange,
-        long_range: LongRange,
-        double_range: DoubleRange,
-        date_range: DateRange,
-        ip_range: IPRange,
-        ip: IP,
+        ip: IP
       }
 
       RANGE_KEYS = %i[integer float long double date]

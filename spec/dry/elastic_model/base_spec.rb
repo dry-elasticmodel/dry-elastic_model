@@ -9,7 +9,8 @@ RSpec.describe Dry::ElasticModel::Base do
     field :double_field, :double
     field :boolean_field, :boolean
     field :ip_field, :ip
-    list :list_text_field, :text
+    list  :list_text_field, :text
+    range :range_long_field, :long
   end
 
   describe "mapping" do
@@ -43,6 +44,9 @@ RSpec.describe Dry::ElasticModel::Base do
             },
             list_text_field: {
               type: "text"
+            },
+            range_long_field: {
+              type: "long_range"
             }
           }
         }
