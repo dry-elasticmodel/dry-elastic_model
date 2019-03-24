@@ -299,6 +299,65 @@ RSpec.describe Dry::ElasticModel::Types do
   end
 
   describe "array" do
+    context "when text type" do
+      subject(:type) { described_class::Array.(described_class::Text) }
+
+      include_examples "type", "text"
+
+      it "accepts empty array" do
+        expect { type[[]] }.not_to raise_error
+      end
+
+      it "accepts stings in a list" do
+        expect { type[["a", "b", "c"]] }.not_to raise_error
+      end
+
+      it "does not accept nil" do
+        expect { type[nil] }.to raise_error(Dry::Types::ConstraintError)
+      end
+
+      it "does not accept nil in a list" do
+        expect { type[["a", nil]] }.to raise_error(Dry::Types::ConstraintError)
+      end
+
+      it "does not accept symbols in a list" do
+        expect { type[[:a, "b", "c"]] }.to raise_error(Dry::Types::ConstraintError)
+      end
+
+      it "does not accept integers in a list" do
+        expect { type[[1, "b", "c"]] }.to raise_error(Dry::Types::ConstraintError)
+      end
+    end
+
+    context "when number type" do
+      subject(:type) { described_class::Array.(described_class::Integer) }
+
+      include_examples "type", "integer"
+
+      it "accepts empty array" do
+        expect { type[[]] }.not_to raise_error
+      end
+
+      it "accepts integers in a list" do
+        expect { type[[1, 2, 3]] }.not_to raise_error
+      end
+
+      it "does not accept nil" do
+        expect { type[nil] }.to raise_error(Dry::Types::ConstraintError)
+      end
+
+      it "does not accept nil in a list" do
+        expect { type[[1, nil]] }.to raise_error(Dry::Types::ConstraintError)
+      end
+
+      it "does not accept symbols in a list" do
+        expect { type[[:a, 2, 3]] }.to raise_error(Dry::Types::ConstraintError)
+      end
+
+      it "does not accept strings in a list" do
+        expect { type[["1", 2, 3]] }.to raise_error(Dry::Types::ConstraintError)
+      end
+    end
   end
 
   describe "range" do
