@@ -58,5 +58,41 @@ RSpec.describe Dry::ElasticModel::Base do
     end
   end
 
+  describe "as_json" do
+    it "returns instance of model" do
+      model = Foo.new(
+        text_field: "foo",
+        keyword_field: :test,
+        date_field: Date.today,
+        long_field: 10,
+        double_field: 1.0,
+        boolean_field: true,
+        ip_field: "127.0.0.1",
+        list_text_field: ["a", "b", "c"],
+        range_long_field: {
+          gt: 0,
+          lt: 10
+        }
+      )
 
+      expect(model.as_json).to(
+        eq(
+          text_field: "foo",
+          keyword_field: :test,
+          date_field: Date.today,
+          long_field: 10,
+          double_field: 1.0,
+          boolean_field: true,
+          ip_field: "127.0.0.1",
+          list_text_field: ["a", "b", "c"],
+          range_long_field: {
+            gt: 0,
+            gte: nil,
+            lt: 10,
+            lte: nil
+          }
+        )
+      )
+    end
+  end
 end
