@@ -66,26 +66,17 @@ module Dry
         attribute :lte, IP
       end
 
-      ArrayTypesCache = {}
-
       Array = ->(type) do
-        ArrayTypesCache.fetch(type) do
-          ArrayTypesCache[type] =
-            Types::Strict::Array.of(type).meta(es_name: type.meta[:es_name])
-        end
+        Types::Strict::Array.of(type).meta(es_name: type.meta[:es_name])
       end
 
-      RangeTypesCache = {}
-
       Range = ->(type) do
-        RangeTypesCache.fetch(type) do
-          Types::Hash.schema(
-            gte: type.optional.default(nil),
-            gt: type.optional.default(nil),
-            lte: type.optional.default(nil),
-            lt: type.optional.default(nil)
-          )
-        end
+        Types::Hash.schema(
+          gte: type.optional.default(nil),
+          gt: type.optional.default(nil),
+          lte: type.optional.default(nil),
+          lt: type.optional.default(nil)
+        )
       end
 
       TYPES = {
