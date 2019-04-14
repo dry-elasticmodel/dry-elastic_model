@@ -7,7 +7,9 @@ module Dry
       include Dry::Types.module
 
       # String datatypes
-      Text = Types::Strict::String.meta(es_name: "text", opts: { index: "not_analyzed" })
+      Text = Types::Strict::String.meta(es_name: "text",
+                                        type_options: TypeOptions::Text,
+                                        opts: { index: "not_analyzed" })
       Keyword = Types::Strict::Symbol.meta(es_name: "keyword")
 
       # Binary datatype

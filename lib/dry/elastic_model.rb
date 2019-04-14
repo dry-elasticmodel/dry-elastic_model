@@ -1,4 +1,5 @@
 require "dry/elastic_model/version"
+require "dry-struct"
 
 module Dry
   module ElasticModel
@@ -8,5 +9,9 @@ module Dry
     autoload :Base, "dry/elastic_model/base"
     autoload :Types, "dry/elastic_model/types"
     autoload :Schema, "dry/elastic_model/schema"
+
+    module TypeOptions
+      autoload :Text, "dry/elastic_model/type_options/text"
+    end
   end
 end
