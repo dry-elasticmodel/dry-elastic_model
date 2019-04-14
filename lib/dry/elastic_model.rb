@@ -11,9 +11,11 @@ module Dry
     autoload :Schema, "dry/elastic_model/schema"
 
     module TypeOptions
-      autoload :Text, "dry/elastic_model/type_options/text"
+      autoload :Keyword, "dry/elastic_model/type_options/keyword"
       autoload :Numeric, "dry/elastic_model/type_options/numeric"
       autoload :ScaledFloat, "dry/elastic_model/type_options/scaled_float"
+      autoload :StringType, "dry/elastic_model/type_options/string_type"
+      autoload :Text, "dry/elastic_model/type_options/text"
     end
   end
 end

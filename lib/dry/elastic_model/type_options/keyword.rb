@@ -1,9 +1,11 @@
 module Dry
   module ElasticModel
     module TypeOptions
-      class Text < StringType
-        attribute :analyzer, Types::String.meta(omittable: true)
-        attribute :fielddata, Types::Bool.meta(omittable: true)
+      class Keyword < StringType
+        attribute :doc_values, Types::Bool.meta(omittable: true)
+        attribute :ignore_above, Types::Bool.meta(omittable: true)
+        attribute :null_value, Types::Bool.meta(omittable: true)
+        attribute :normalizer, Types::String.meta(omittable: true)
         attribute :fielddata_frequency_filter, Types::String.meta(omittable: true)
         attribute :position_increment_gap, Types::Integer.meta(omittable: true)
         attribute :search_analyzer, Types::String.meta(omittable: true)
