@@ -45,7 +45,7 @@ module Dry
       HalfFloat = (Types::Strict::Integer | Types::Strict::Float).
                     meta(type_options: TypeOptions::Numeric, es_name: "half_float")
       ScaledFloat = (Types::Strict::Integer | Types::Strict::Float).
-                      meta(es_name: "scaled_float")
+                      meta(type_options: TypeOptions::ScaledFloat, es_name: "scaled_float")
 
       # Boolean datatype
       Boolean = (Types::Strict::Bool | Types.Value('true') | Types.Value('false')).

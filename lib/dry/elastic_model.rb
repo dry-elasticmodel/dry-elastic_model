@@ -13,6 +13,7 @@ module Dry
     module TypeOptions
       autoload :Text, "dry/elastic_model/type_options/text"
       autoload :Numeric, "dry/elastic_model/type_options/numeric"
+      autoload :ScaledFloat, "dry/elastic_model/type_options/scaled_float"
     end
   end
 end

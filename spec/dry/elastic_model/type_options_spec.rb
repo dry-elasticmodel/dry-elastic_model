@@ -16,4 +16,20 @@ RSpec.describe Dry::ElasticModel::TypeOptions do
       end
     end.to raise_error(Dry::Struct::Error, /violates constraints/)
   end
+
+  describe "scaled_float" do
+    it "requires scaling factor option" do
+      expect do
+        class Foo < Dry::ElasticModel::Base
+          field :float_field, :scaled_float
+        end
+      end.to raise_error(Dry::Struct::Error, /:scaling_factor is missing/)
+
+      expect do
+        class Bar < Dry::ElasticModel::Base
+          field :float_field, :scaled_float, scaling_factor: 10
+        end
+      end.not_to raise_error
+    end
+  end
 end
