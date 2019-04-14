@@ -24,7 +24,7 @@ module Dry
         attribute :term_vector, Types::Bool.meta(omittable: true)
 
         def to_h
-          attributes.compact
+          attributes
         end
       end
     end
