@@ -12,6 +12,7 @@ module Dry
 
     module TypeOptions
       autoload :Text, "dry/elastic_model/type_options/text"
+      autoload :Numeric, "dry/elastic_model/type_options/numeric"
     end
   end
 end

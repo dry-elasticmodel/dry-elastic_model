@@ -28,22 +28,22 @@ module Dry
 
       Long = Types::Strict::Integer.
                constrained(gteq: -LONG_LIMIT, lteq: LONG_LIMIT-1).
-               meta(es_name: "long")
+               meta(type_options: TypeOptions::Numeric, es_name: "long")
       Integer = Types::Strict::Integer.
                   constrained(gteq: -INTEGER_LIMIT, lteq: INTEGER_LIMIT-1).
-                  meta(es_name: "integer")
+                  meta(type_options: TypeOptions::Numeric, es_name: "integer")
       Short = Types::Strict::Integer.
                 constrained(gteq: -SHORT_LIMIT, lteq: SHORT_LIMIT-1).
-                meta(es_name: "short")
+                meta(type_options: TypeOptions::Numeric, es_name: "short")
       Byte = Types::Strict::Integer.
                constrained(gteq: -BYTE_LIMIT, lteq: BYTE_LIMIT-1).
-               meta(es_name: "byte")
+               meta(type_options: TypeOptions::Numeric, es_name: "byte")
       Double = (Types::Strict::Integer | Types::Strict::Float).
                  meta(es_name: "double")
       Float = (Types::Strict::Integer | Types::Strict::Float).
-                meta(es_name: "float")
+                meta(type_options: TypeOptions::Numeric, es_name: "float")
       HalfFloat = (Types::Strict::Integer | Types::Strict::Float).
-                    meta(es_name: "half_float")
+                    meta(type_options: TypeOptions::Numeric, es_name: "half_float")
       ScaledFloat = (Types::Strict::Integer | Types::Strict::Float).
                       meta(es_name: "scaled_float")
 
