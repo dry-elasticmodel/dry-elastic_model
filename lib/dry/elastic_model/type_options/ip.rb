@@ -4,7 +4,6 @@ module Dry
   module ElasticModel
     module TypeOptions
       class IP < Base
-        # rubocop:disable Metrics/LineLength
         attribute :boost, Types::Float.meta(omittable: true)
         attribute :doc_values, Types::Bool.meta(omittable: true)
         attribute :include_in_all, Types::Bool.meta(omittable: true)

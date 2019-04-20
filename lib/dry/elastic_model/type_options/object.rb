@@ -4,7 +4,6 @@ module Dry
   module ElasticModel
     module TypeOptions
       class Object < Base
-        # rubocop:disable Metrics/LineLength
         attribute :dynamic, Types::Bool.meta(omittable: true)
         attribute :enabled, Types::Bool.meta(omittable: true)
         attribute :include_in_all, Types::Bool.meta(omittable: true)
