@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 module Dry
   module ElasticModel
     module TypeOptions
       class StringType < Dry::Struct
         input input.strict
 
+        # rubocop:disable Metrics/LineLength
         attribute :boost, Types::Float.meta(omittable: true)
         attribute :eager_global_ordinals, Types::Bool.meta(omittable: true)
         attribute :fields, Types::Hash.meta(omittable: true)
@@ -14,7 +17,8 @@ module Dry
 
         attribute :norms, Types::Bool.meta(omittable: true)
         attribute :store, Types::Bool.meta(omittable: true)
-        attribute :similarity, (Types::Value('BM25') | Types::Value('classic') | Types::Value('boolean')).meta(omittable: true)
+        attribute :similarity, (Types::Value("BM25") | Types::Value("classic") | Types::Value("boolean")).meta(omittable: true)
+        # rubocop:enable Metrics/LineLength
 
         def to_h
           attributes

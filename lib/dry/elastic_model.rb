@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "dry/elastic_model/version"
 require "dry-struct"
 
