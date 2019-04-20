@@ -20,23 +20,18 @@ module Dry
       end
 
       def range(name, type, opts = {})
-        complex_type_definition(
-          name: name, type: type, master_type: Types::Range, opts: opts
-        )
+        member = Types::RANGE_TYPES.fetch(type.to_sym)
+
+        type_definition = Types::Range.call(member)
+
+        default_opts = type_definition.meta[:opts] || {}
+        attribute(name, type_definition.meta(opts: default_opts.merge(opts)))
       end
 
       def list(name, type, opts = {})
-        complex_type_definition(
-          name: name, type: type, master_type: Types::Array, opts: opts
-        )
-      end
+        member = Types::TYPES.fetch(type.to_sym)
 
-      private
-
-      def complex_type_definition(name:, type:, master_type:, opts:)
-        member = Types::RANGE_TYPES.fetch(type.to_sym)
-
-        type_definition = master_type.(member)
+        type_definition = Types::Array.call(member)
 
         default_opts = type_definition.meta[:opts] || {}
         attribute(name, type_definition.meta(opts: default_opts.merge(opts)))
