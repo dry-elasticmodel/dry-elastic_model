@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 module Dry
   module ElasticModel
     module Schema
       include Types
-      extend self
 
       def mapping
         {
           name.downcase.to_sym => {
-            properties: self.schema.inject({}) do |h, (attr, definition)|
+            properties: schema.inject({}) do |h, (attr, definition)|
               opts = definition.meta.fetch(:opts, {})
               h.merge(
                 attr => { type: definition.meta.fetch(:es_name) }.merge(opts)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 RSpec.describe Dry::ElasticModel::Types do
@@ -108,13 +110,13 @@ RSpec.describe Dry::ElasticModel::Types do
     end
 
     it "does not accept numbers beyond upper limit (2**63-1)" do
-      expect { type[2**63-1] }.not_to raise_error
+      expect { type[2**63 - 1] }.not_to raise_error
       expect { type[2**63] }.to raise_error(Dry::Types::ConstraintError)
     end
 
     it "does not accept numbers beyond lower limit (-2**63)" do
       expect { type[-2**63] }.not_to raise_error
-      expect { type[-2**63-1] }.to raise_error(Dry::Types::ConstraintError)
+      expect { type[-2**63 - 1] }.to raise_error(Dry::Types::ConstraintError)
     end
 
     it "does not accept string" do
@@ -137,13 +139,13 @@ RSpec.describe Dry::ElasticModel::Types do
     end
 
     it "does not accept numbers beyond upper limit (2**31-1)" do
-      expect { type[2**31-1] }.not_to raise_error
+      expect { type[2**31 - 1] }.not_to raise_error
       expect { type[2**31] }.to raise_error(Dry::Types::ConstraintError)
     end
 
     it "does not accept numbers beyond lower limit (-2**31)" do
       expect { type[-2**31] }.not_to raise_error
-      expect { type[-2**31-1] }.to raise_error(Dry::Types::ConstraintError)
+      expect { type[-2**31 - 1] }.to raise_error(Dry::Types::ConstraintError)
     end
 
     it "does not accept string" do
@@ -166,13 +168,13 @@ RSpec.describe Dry::ElasticModel::Types do
     end
 
     it "does not accept numbers beyond upper limit (2**15-1)" do
-      expect { type[2**15-1] }.not_to raise_error
+      expect { type[2**15 - 1] }.not_to raise_error
       expect { type[2**15] }.to raise_error(Dry::Types::ConstraintError)
     end
 
     it "does not accept numbers beyond lower limit (-2**15)" do
       expect { type[-2**15] }.not_to raise_error
-      expect { type[-2**15-1] }.to raise_error(Dry::Types::ConstraintError)
+      expect { type[-2**15 - 1] }.to raise_error(Dry::Types::ConstraintError)
     end
 
     it "does not accept string" do
@@ -183,7 +185,6 @@ RSpec.describe Dry::ElasticModel::Types do
       expect { type["10"] }.to raise_error(Dry::Types::ConstraintError)
     end
   end
-
 
   describe "byte" do
     subject(:type) { described_class::Byte }
@@ -196,13 +197,13 @@ RSpec.describe Dry::ElasticModel::Types do
     end
 
     it "does not accept numbers beyond upper limit (2**8-1)" do
-      expect { type[2**8-1] }.not_to raise_error
+      expect { type[2**8 - 1] }.not_to raise_error
       expect { type[2**8] }.to raise_error(Dry::Types::ConstraintError)
     end
 
     it "does not accept numbers beyond lower limit (-2**8)" do
       expect { type[-2**8] }.not_to raise_error
-      expect { type[-2**8-1] }.to raise_error(Dry::Types::ConstraintError)
+      expect { type[-2**8 - 1] }.to raise_error(Dry::Types::ConstraintError)
     end
 
     it "does not accept floating point number" do
@@ -321,7 +322,7 @@ RSpec.describe Dry::ElasticModel::Types do
 
   describe "array" do
     context "when text type" do
-      subject(:type) { described_class::Array.(described_class::Text) }
+      subject(:type) { described_class::Array.call(described_class::Text) }
 
       include_examples "type", "text"
       include_examples "nil handling"
@@ -331,7 +332,7 @@ RSpec.describe Dry::ElasticModel::Types do
       end
 
       it "accepts stings in a list" do
-        expect { type[["a", "b", "c"]] }.not_to raise_error
+        expect { type[%w(a b c)] }.not_to raise_error
       end
 
       it "does not accept nil" do
@@ -352,7 +353,7 @@ RSpec.describe Dry::ElasticModel::Types do
     end
 
     context "when number type" do
-      subject(:type) { described_class::Array.(described_class::Integer) }
+      subject(:type) { described_class::Array.call(described_class::Integer) }
 
       include_examples "type", "integer"
       include_examples "nil handling"
@@ -381,7 +382,7 @@ RSpec.describe Dry::ElasticModel::Types do
 
   describe "range" do
     context "when IP type" do
-      subject(:type) { described_class::Range.(described_class::IP) }
+      subject(:type) { described_class::Range.call(described_class::IP) }
 
       include_examples "type", "ip_range"
       include_examples "nil handling"
@@ -391,11 +392,10 @@ RSpec.describe Dry::ElasticModel::Types do
           type[{ lt: "127.0.0.10", gte: "127.0.0.1" }]
         end.not_to raise_error
       end
-
     end
 
     context "when number type" do
-      subject(:type) { described_class::Range.(described_class::Integer) }
+      subject(:type) { described_class::Range.call(described_class::Integer) }
 
       include_examples "type", "integer_range"
       include_examples "nil handling"

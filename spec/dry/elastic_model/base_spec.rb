@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 RSpec.describe Dry::ElasticModel::Base do
@@ -68,7 +70,7 @@ RSpec.describe Dry::ElasticModel::Base do
         double_field: 1.0,
         boolean_field: true,
         ip_field: "127.0.0.1",
-        list_text_field: ["a", "b", "c"],
+        list_text_field: %w(a b c),
         range_long_field: {
           gt: 0,
           lt: 10
@@ -84,7 +86,7 @@ RSpec.describe Dry::ElasticModel::Base do
           double_field: 1.0,
           boolean_field: true,
           ip_field: "127.0.0.1",
-          list_text_field: ["a", "b", "c"],
+          list_text_field: %w(a b c),
           range_long_field: {
             gt: 0,
             gte: nil,
