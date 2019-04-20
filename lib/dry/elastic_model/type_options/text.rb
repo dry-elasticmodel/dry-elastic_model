@@ -13,10 +13,6 @@ module Dry
         attribute :search_quote_analyzer, Types::String.meta(omittable: true)
         attribute :term_vector, Types::Bool.meta(omittable: true)
         # rubocop:enable Metrics/LineLength
-
-        def to_h
-          attributes
-        end
       end
     end
   end

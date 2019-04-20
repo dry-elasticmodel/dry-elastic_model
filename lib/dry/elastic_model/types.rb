@@ -18,11 +18,13 @@ module Dry
 
       # Binary datatype
       # TODO: Verify if correct Base64
-      Binary = Types::Strict::String.meta(es_name: "binary")
+      Binary = Types::Strict::String.meta(es_name: "binary",
+                                          type_options: TypeOptions::Binary)
 
       # Date datatype
       # TODO: Test strings
-      Date = (Types::Strict::Date | Types::Strict::Time | Types.Value("now")).meta(es_name: "date", opts: { format: "strict_date_optional_time||epoch_millis" })
+      Date = (Types::Strict::Date | Types::Strict::Time | Types.Value("now")).
+             meta(es_name: "date", type_options: TypeOptions::Date)
 
       # Numeric datatypes
       LONG_LIMIT = 2**63
@@ -33,33 +35,40 @@ module Dry
       Long = Types::Strict::Integer.
              constrained(gteq: -LONG_LIMIT, lteq: LONG_LIMIT - 1).
              meta(type_options: TypeOptions::Numeric, es_name: "long")
+
       Integer = Types::Strict::Integer.
                 constrained(gteq: -INTEGER_LIMIT, lteq: INTEGER_LIMIT - 1).
                 meta(type_options: TypeOptions::Numeric, es_name: "integer")
+
       Short = Types::Strict::Integer.
               constrained(gteq: -SHORT_LIMIT, lteq: SHORT_LIMIT - 1).
               meta(type_options: TypeOptions::Numeric, es_name: "short")
+
       Byte = Types::Strict::Integer.
              constrained(gteq: -BYTE_LIMIT, lteq: BYTE_LIMIT - 1).
              meta(type_options: TypeOptions::Numeric, es_name: "byte")
+
       Double = (Types::Strict::Integer | Types::Strict::Float).
                meta(es_name: "double")
       Float = (Types::Strict::Integer | Types::Strict::Float).
               meta(type_options: TypeOptions::Numeric, es_name: "float")
+
       HalfFloat = (Types::Strict::Integer | Types::Strict::Float).
                   meta(type_options: TypeOptions::Numeric, es_name: "half_float")
+
       ScaledFloat = (Types::Strict::Integer | Types::Strict::Float).
-                    meta(type_options: TypeOptions::ScaledFloat, es_name: "scaled_float")
+                    meta(type_options: TypeOptions::ScaledFloat,
+                         es_name: "scaled_float")
 
       # Boolean datatype
       Boolean = (Types::Strict::Bool | Types.Value("true") | Types.Value("false")).
-                meta(es_name: "boolean")
+                meta(es_name: "boolean", type_options: TypeOptions::Boolean)
 
       # IP datatype
       IP = (
         Types::Strict::String.constrained(format: Resolv::IPv4::Regex) |
         Types::Strict::String.constrained(format: Resolv::IPv6::Regex)
-      ).meta(es_name: "ip")
+      ).meta(es_name: "ip", type_options: TypeOptions::IP)
 
       Array = lambda do |type|
         Types::Strict::Array.of(type).meta(es_name: type.meta[:es_name])
@@ -71,10 +80,12 @@ module Dry
           gt: type.optional.default(nil),
           lte: type.optional.default(nil),
           lt: type.optional.default(nil)
-        ).strict.meta(es_name: "#{type.meta[:es_name]}_range")
+        ).strict.meta(es_name: "#{type.meta[:es_name]}_range",
+                      type_options: TypeOptions::Range)
       end
 
-      ObjectType = Types::Strict::Hash.meta(es_name: "object")
+      ObjectType = Types::Strict::Hash.meta(es_name: "object",
+                                            type_options: TypeOptions::Object)
 
       TYPES = {
         text: Text,
