@@ -6,7 +6,7 @@ require "resolv"
 module Dry
   module ElasticModel
     module Types
-      include Dry::Types.module
+      include Dry::Types()
 
       # rubocop:disable Metrics/LineLength
       # String datatypes

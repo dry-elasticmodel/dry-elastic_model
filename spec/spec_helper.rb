@@ -11,6 +11,7 @@ end
 
 require "bundler/setup"
 require "dry/elastic_model"
+require "pry"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

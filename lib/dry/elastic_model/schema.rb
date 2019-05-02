@@ -8,7 +8,10 @@ module Dry
       def mapping
         {
           name.downcase.to_sym => {
-            properties: schema.inject({}) do |h, (attr, definition)|
+            properties: schema.inject({}) do |h, type|
+              attr = type.name
+              definition = type.lax
+
               opts = definition.meta.fetch(:opts, {})
               h.merge(
                 attr => { type: definition.meta.fetch(:es_name) }.merge(opts)

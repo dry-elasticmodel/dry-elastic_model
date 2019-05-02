@@ -413,13 +413,13 @@ RSpec.describe Dry::ElasticModel::Types do
       it "does not accept values of other type with correct key" do
         expect do
           type[{ lt: "3" }]
-        end.to raise_error(Dry::Types::ConstraintError)
+        end.to raise_error(Dry::Types::SchemaError)
       end
 
       it "does not accept if hash has other keys" do
         expect do
           type[{ foo: 1 }]
-        end.to raise_error(Dry::Types::ConstraintError)
+        end.to raise_error(Dry::Types::UnknownKeysError)
       end
 
       it "does not accept a list" do
