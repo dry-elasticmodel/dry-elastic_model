@@ -29,7 +29,7 @@ Responsibilities of this library:
 Sample model:
 
 ```ruby
-  class Foo < Dry::ElasticModel::Base
+  class FooBar < Dry::ElasticModel::Base
     field :text_field, :text
     field :keyword_field, :keyword, index: false
     field :date_field, :date
@@ -46,30 +46,37 @@ This corresponds to following Elasticsearch mapping (calling `Foo.mapping.to_jso
 
 ```json
 {
-  "foo":{
-    "properties":{
-      "text_field":{
-        "type":"text",
-        "index":false
+  "foobar": {
+    "properties": {
+      "text_field": {
+        "type": "text",
+        "index": "not_analyzed"
       },
-      "keyword_field":{
-        "type":"keyword"
+      "keyword_field": {
+        "type": "keyword",
+        "index": false
       },
-      "date_field":{
-        "type":"date",
-        "format":"strict_date_optional_time||epoch_millis"
+      "date_field": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_millis"
       },
-      "long_field":{
-        "type":"long"
+      "long_field": {
+        "type": "long"
       },
-      "double_field":{
-        "type":"double"
+      "double_field": {
+        "type": "double"
       },
-      "boolean_field":{
-        "type":"boolean"
+      "boolean_field": {
+        "type": "boolean"
       },
-      "ip_field":{
-        "type":"ip"
+      "ip_field": {
+        "type": "ip"
+      },
+      "list_text_field": {
+        "type": "text"
+      },
+      "range_long_field": {
+        "type": "long_range"
       }
     }
   }
