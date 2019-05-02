@@ -1,4 +1,4 @@
-# Dry::ElasticModel [![Build Status](https://travis-ci.org/koleksiuk/dry-elastic_model.svg?branch=master)](https://travis-ci.org/koleksiuk/dry-elastic_model) [![Test Coverage](https://api.codeclimate.com/v1/badges/feba233f76f9fd76a6ad/test_coverage)](https://codeclimate.com/github/koleksiuk/dry-elastic_model/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/feba233f76f9fd76a6ad/maintainability)](https://codeclimate.com/github/koleksiuk/dry-elastic_model/maintainability)
+# Dry::ElasticModel [![Gem Version](https://badge.fury.io/rb/dry-elastic_model.svg)](https://rubygems.org/gems/dry-elastic_model) [![Build Status](https://travis-ci.org/koleksiuk/dry-elastic_model.svg?branch=master)](https://travis-ci.org/koleksiuk/dry-elastic_model) [![Test Coverage](https://api.codeclimate.com/v1/badges/feba233f76f9fd76a6ad/test_coverage)](https://codeclimate.com/github/koleksiuk/dry-elastic_model/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/feba233f76f9fd76a6ad/maintainability)](https://codeclimate.com/github/koleksiuk/dry-elastic_model/maintainability)
 
 ## Installation
 
