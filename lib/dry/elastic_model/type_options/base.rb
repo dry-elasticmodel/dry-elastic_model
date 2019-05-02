@@ -3,8 +3,8 @@
 module Dry
   module ElasticModel
     module TypeOptions
-      class Base < Dry::Struct
-        input input.strict
+      class Base < ::Dry::Struct
+        schema schema.strict
 
         def to_h
           attributes
