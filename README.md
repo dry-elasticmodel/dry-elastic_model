@@ -1,9 +1,5 @@
 # Dry::ElasticModel [![Build Status](https://travis-ci.org/koleksiuk/dry-elastic_model.svg?branch=master)](https://travis-ci.org/koleksiuk/dry-elastic_model) [![Test Coverage](https://api.codeclimate.com/v1/badges/feba233f76f9fd76a6ad/test_coverage)](https://codeclimate.com/github/koleksiuk/dry-elastic_model/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/feba233f76f9fd76a6ad/maintainability)](https://codeclimate.com/github/koleksiuk/dry-elastic_model/maintainability)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/dry/elastic_model`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -22,7 +18,64 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This gem was created to provide a thin layer between Elasticsearch models mapping and Ruby objects. Right now, if you want to build your own Elasticsearch wrapper, you're on your own when it comes to creating document mappings and mapping ES documents to Ruby code, which can be painful especially if you want to also validate them before pushing.
+
+Responsibilities of this library:
+* models that represent Elasticsearch documents
+* converting and validating Ruby objects to Elasticsearch documents
+* converting & validating Elasticsearch documents to Ruby objects
+* providing mapping out-of-box based on created models
+
+Sample model:
+
+```ruby
+  class Foo < Dry::ElasticModel::Base
+    field :text_field, :text
+    field :keyword_field, :keyword, index: false
+    field :date_field, :date
+    field :long_field, :long
+    field :double_field, :double
+    field :boolean_field, :boolean
+    field :ip_field, :ip
+    list  :list_text_field, :text
+    range :range_long_field, :long
+  end
+```
+
+This corresponds to following Elasticsearch mapping (calling `Foo.mapping.to_json`):
+
+```json
+{
+  "foo":{
+    "properties":{
+      "text_field":{
+        "type":"text",
+        "index":false
+      },
+      "keyword_field":{
+        "type":"keyword"
+      },
+      "date_field":{
+        "type":"date",
+        "format":"strict_date_optional_time||epoch_millis"
+      },
+      "long_field":{
+        "type":"long"
+      },
+      "double_field":{
+        "type":"double"
+      },
+      "boolean_field":{
+        "type":"boolean"
+      },
+      "ip_field":{
+        "type":"ip"
+      }
+    }
+  }
+}
+```
+
 
 ## Development
 
