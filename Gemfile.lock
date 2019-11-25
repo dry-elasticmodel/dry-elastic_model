@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    dry-elastic_model (0.1.0)
-      dry-struct (~> 1.0.0)
+    dry-elastic_model (0.1.1)
+      dry-struct (~> 1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -25,7 +25,7 @@ GEM
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.2)
       dry-equalizer (~> 0.2)
-    dry-struct (1.0.0)
+    dry-struct (1.1.1)
       dry-core (~> 0.4, >= 0.4.3)
       dry-equalizer (~> 0.2)
       dry-types (~> 1.0)
