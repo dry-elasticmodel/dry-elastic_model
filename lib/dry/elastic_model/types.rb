@@ -13,7 +13,7 @@ module Dry
       Text = Types::Strict::String.meta(es_name: "text",
                                         type_options: TypeOptions::Text,
                                         opts: { index: "not_analyzed" })
-      Keyword = (Types::Strict::Text | Types::Strict::Symbol).
+      Keyword = (Types::Strict::String | Types::Strict::Symbol).
                 meta(type_options: TypeOptions::Keyword, es_name: "keyword")
 
       # Binary datatype
