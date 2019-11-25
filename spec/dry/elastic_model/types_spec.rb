@@ -34,7 +34,7 @@ RSpec.describe Dry::ElasticModel::Types do
     end
   end
 
-  describe "keyeword" do
+  describe "keyword" do
     subject(:type) { described_class::Keyword }
 
     include_examples "type", "keyword"
@@ -44,8 +44,8 @@ RSpec.describe Dry::ElasticModel::Types do
       expect { type[:test] }.not_to raise_error
     end
 
-    it "does not accept string" do
-      expect { type["test"] }.to raise_error(Dry::Types::ConstraintError)
+    it "accepts strings" do
+      expect { type["test"] }.not_to raise_error
     end
 
     it "does not coerce other types" do
