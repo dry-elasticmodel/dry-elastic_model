@@ -18,6 +18,12 @@ Or install it yourself as:
 
 ## Usage
 
+## Release
+
+1. Bump VERSION and push a commit to master
+2. `$ gem build dry-elastic_model.gemspec`
+3. `$ gem push dry-elastic_model-${VERSION}.gem`
+
 This gem was created to provide a thin layer between Elasticsearch models mapping and Ruby objects. Right now, if you want to build your own Elasticsearch wrapper, you're on your own when it comes to creating document mappings and mapping ES documents to Ruby code, which can be painful especially if you want to also validate them before pushing.
 
 Responsibilities of this library:
