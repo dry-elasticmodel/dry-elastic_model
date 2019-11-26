@@ -22,9 +22,20 @@ module Dry
                                           type_options: TypeOptions::Binary)
 
       # Date datatype
-      # TODO: Test strings
-      Date = (Types::Strict::Date | Types::Strict::Time | Types.Value("now")).
-             meta(es_name: "date", type_options: TypeOptions::Date)
+      Date = (
+        Types::Strict::Date |
+        Types::JSON::Date |
+        Types.Value("now")
+      ).meta(es_name: "date", type_options: TypeOptions::Date)
+
+      MAX_UNIX_TIME = 2147468400000 # 2038-01-19
+      DateTime = (
+        Types::Strict::Time |
+        Types::Strict::DateTime |
+        Types::JSON::DateTime |
+        Types::Integer.constrained(gteq: 0, lteq:  MAX_UNIX_TIME) |
+        Types.Value("now")
+      ).meta(es_name: "date", type_options: TypeOptions::Date)
 
       # Numeric datatypes
       LONG_LIMIT = 2**63
@@ -92,6 +103,7 @@ module Dry
         binary: Binary,
         keyword: Keyword,
         date: Date,
+        datetime: DateTime,
         long: Long,
         integer: Integer,
         short: Short,

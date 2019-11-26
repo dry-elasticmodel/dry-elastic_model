@@ -68,6 +68,51 @@ RSpec.describe Dry::ElasticModel::Types do
     end
   end
 
+  describe "datetime" do
+    subject(:type) { described_class::DateTime }
+
+    include_examples "type", "date"
+    include_examples "nil handling"
+
+    it "accepts 'now' string" do
+      expect { type["now"] }.not_to raise_error
+    end
+
+    it "accepts date strings and parses them" do
+      str = "2019-11-26"
+      expect { type[str] }.not_to raise_error
+      expect(type[str]).to eq(Date.parse(str))
+    end
+
+    it "does not accept date" do
+      expect { type[Date.today] }.to raise_error(Dry::Types::ConstraintError)
+    end
+
+    it "accepts datetime" do
+      now = DateTime.now
+      expect { type[now] }.not_to raise_error
+      expect(type[now]).to eq(now)
+    end
+
+    it "accepts time" do
+      now = Time.now
+      expect { type[now] }.not_to raise_error
+      expect(type[now]).to eq(now)
+    end
+
+    it "does not accept any other string" do
+      expect { type["test"] }.to raise_error(Dry::Types::ConstraintError)
+    end
+
+    it "accepts UNIX epoch integers" do
+      expect { type[-1] }.to raise_error(Dry::Types::ConstraintError)
+      expect { type[0] }.not_to raise_error
+      expect(type[0]).to eq(0)
+      expect { type[2147468400000] }.not_to raise_error
+      expect { type[2147468400001] }.to raise_error(Dry::Types::ConstraintError)
+    end
+  end
+
   describe "date" do
     subject(:type) { described_class::Date }
 
@@ -78,16 +123,26 @@ RSpec.describe Dry::ElasticModel::Types do
       expect { type["now"] }.not_to raise_error
     end
 
+    it "accepts date strings and parses them" do
+      str = "2019-11-26"
+      expect { type[str] }.not_to raise_error
+      expect(type[str]).to eq(DateTime.parse(str))
+    end
+
     it "accepts date" do
       expect { type[Date.today] }.not_to raise_error
+      expect(type[Date.today]).to eq(Date.today)
     end
 
     it "accepts datetime" do
-      expect { type[DateTime.now] }.not_to raise_error
+      now = DateTime.now
+      expect { type[now] }.not_to raise_error
+      expect(type[now]).to eq(now)
     end
 
-    it "accepts time" do
-      expect { type[Time.now] }.not_to raise_error
+    it "does not accept time" do
+      now = Time.now
+      expect { type[now] }.to raise_error(Dry::Types::ConstraintError)
     end
 
     it "does not accept any other string" do
