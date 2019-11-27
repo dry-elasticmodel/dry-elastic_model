@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dry-elastic_model (0.1.4)
+    dry-elastic_model (0.2.0)
       dry-struct (~> 1.0)
 
 GEM
