@@ -37,6 +37,7 @@ Sample model:
 ```ruby
   class FooBar < Dry::ElasticModel::Base
     field :text_field, :text
+    field :newly_added_text_field, :text, allow_missing: true
     field :keyword_field, :keyword, index: false
     field :date_field, :date
     field :long_field, :long
@@ -55,6 +56,10 @@ This corresponds to following Elasticsearch mapping (calling `Foo.mapping.to_jso
   "foobar": {
     "properties": {
       "text_field": {
+        "type": "text",
+        "index": "not_analyzed"
+      },
+      "newly_added_text_field": {
         "type": "text",
         "index": "not_analyzed"
       },
