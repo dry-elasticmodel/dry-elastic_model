@@ -98,8 +98,8 @@ module Dry
                       type_options: TypeOptions::Range)
       end
 
-      ObjectType = Types::Strict::Hash.meta(es_name: "object",
-                                            type_options: TypeOptions::Object)
+      ObjectType = Types::Strict::Hash.optional.meta(es_name: "object",
+                                                     type_options: TypeOptions::Object)
 
       TYPES = {
         text: Text,

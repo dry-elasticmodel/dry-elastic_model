@@ -489,7 +489,7 @@ RSpec.describe Dry::ElasticModel::Types do
     subject(:type) { described_class::ObjectType }
 
     include_examples "type", "object"
-    include_examples "null not allowed"
+    include_examples "null allowed"
 
     it "accepts objects" do
       expect { type[{}] }.not_to raise_error
