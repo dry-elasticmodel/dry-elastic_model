@@ -85,7 +85,7 @@ module Dry
       ).optional.meta(es_name: "ip", type_options: TypeOptions::IP)
 
       Array = lambda do |type|
-        Types::Strict::Array.of(type).meta(es_name: type.meta[:es_name])
+        Types::Strict::Array.of(type).meta(es_name: type.meta[:es_name]).optional
       end
 
       Range = lambda do |type|
