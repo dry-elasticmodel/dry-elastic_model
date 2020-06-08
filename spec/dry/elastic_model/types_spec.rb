@@ -382,7 +382,7 @@ RSpec.describe Dry::ElasticModel::Types do
       subject(:type) { described_class::Array.call(described_class::Text) }
 
       include_examples "type", "text"
-      include_examples "null not allowed"
+      include_examples "null allowed"
 
       it "accepts empty array" do
         expect { type[[]] }.not_to raise_error
@@ -409,7 +409,7 @@ RSpec.describe Dry::ElasticModel::Types do
       subject(:type) { described_class::Array.call(described_class::Integer) }
 
       include_examples "type", "integer"
-      include_examples "null not allowed"
+      include_examples "null allowed"
 
       it "accepts empty array" do
         expect { type[[]] }.not_to raise_error
